@@ -1,7 +1,20 @@
+<!-- ===================================================================
+     PROMOTIONS – Trang Khuyến Mãi FLEURÉ
+     Cấu trúc:
+       1. Flash Sale banner với đồng hồ đếm ngược realtime (cập nhật mỗi giây)
+       2. Danh sách mã voucher có thể sao chép clipboard
+       3. Bộ lọc sản phẩm: Tất cả / Giảm sâu ≥ 20% / Dưới 350k
+       4. Lưới sản phẩm đang giảm giá (ProductCard với badgeMode='sale')
+     
+     Dữ liệu: sản phẩm giảm giá lọc từ MongoDB collection products.
+=================================================================== -->
+
+<!-- Breadcrumb điều hướng -->
 <div class="breadcrumb">
   <a routerLink="/">Trang chủ</a> &gt; <span>Khuyến mãi</span>
 </div>
 
+<!-- FLASH SALE BANNER: hero section với đồng hồ đếm ngược -->
 <!-- FLASH SALE HERO BANNER -->
 <section class="flash-wrap">
   <div class="flash-card">
@@ -20,6 +33,7 @@
   </div>
 </section>
 
+<!-- MÃ GIẢM GIÁ: danh sách voucher có thể sao chép vào clipboard -->
 <!-- MA GIAM GIA (VOUCHER) -->
 <section class="voucher-section">
   <div class="section-header">
@@ -55,6 +69,7 @@
   </div>
 </section>
 
+<!-- BỘ LỌC SẢN PHẨM: Tất cả / Giảm sâu ≥ 20% / Dưới 350k -->
 <!-- BO LOC KHUYEN MAI -->
 <section class="promo-filter" aria-label="Bộ lọc sản phẩm khuyến mãi">
   <button
@@ -89,6 +104,7 @@
   </button>
 </section>
 
+<!-- DANH SÁCH SẢN PHẨM ĐANG GIẢM GIÁ: lấy từ MongoDB, lọc và sắp xếp theo discount -->
 <!-- DANH SACH SAN PHAM KHUYEN MAI -->
 @if (shop.loading() || shop.error()) {
   <app-data-state

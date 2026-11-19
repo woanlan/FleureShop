@@ -1,4 +1,5 @@
-<!-- HERO BANNER FLEURE (Tu collection banners trong MongoDB) -->
+<!-- KHỐI HERO BANNER (Đọc từ collection banners trong MongoDB qua Signal activeSlide) -->
+<!-- Dùng cú pháp @if (...; as slide) để vừa kiểm tra có banner vừa gán biến tạm slide cho template -->
 @if (activeSlide(); as slide) {
   <section class="hero-section">
     <div class="hero-card">
@@ -15,6 +16,7 @@
         <img [src]="slide.image" [alt]="slide.title" />
       </div>
 
+      <!-- Dãy nút chấm tròn (dots) dùng @for lặp qua danh sách slides() để người dùng chuyển banner -->
       <div class="hero-dots" role="group" aria-label="Chọn banner">
         @for (item of slides(); track item.id; let idx = $index) {
           <button
@@ -31,6 +33,7 @@
   </section>
 }
 
+<!-- KIỂM TRA TRẠNG THÁI DỮ LIỆU: Hiện màn hình chờ / báo lỗi bằng <app-data-state> hoặc hiển thị nội dung chính -->
 @if (shop.loading() || shop.error()) {
   <app-data-state
     [loading]="shop.loading()"
@@ -38,7 +41,7 @@
     (retry)="shop.loadCatalog()"
   />
 } @else {
-  <!-- 1. HOA MOI VE -->
+  <!-- 1. MỤC HOA TƯƠI MỚI VỀ: Lặp qua computed Signal newProducts() và tái sử dụng thẻ <app-product-card> -->
   <section class="section">
     <div class="section-header">
       <h2><app-icon name="sparkles" [size]="18" class="heading-icon" /><span>Hoa tươi mới về</span></h2>
@@ -53,7 +56,7 @@
     </div>
   </section>
 
-  <!-- PROMO BANNER 1 -->
+  <!-- BANNER QUẢNG BÁ ƯU ĐÃI: Điều hướng khách hàng sang trang Khuyến mãi (/promotions) -->
   <section class="promo-banner">
     <img src="assets/flowers/banner-orchid.jpg" alt="Ưu đãi FLEURÉ" />
     <div class="promo-content">
@@ -64,7 +67,7 @@
     </div>
   </section>
 
-  <!-- 2. HOA DANG KHUYEN MAI -->
+  <!-- 2. MỤC HOA ĐANG GIẢM GIÁ: Lặp qua saleProducts(), truyền badgeMode="sale" để hiện nhãn phần trăm giảm -->
   <section class="section">
     <div class="section-header">
       <h2><app-icon name="badge-percent" [size]="18" class="heading-icon" /><span>Hoa đang giảm giá</span></h2>
@@ -79,7 +82,7 @@
     </div>
   </section>
 
-  <!-- 3. HOA BAN CHAY NHAT -->
+  <!-- 3. MỤC HOA BÁN CHẠY NHẤT: Lặp qua bestSellingProducts(), truyền badgeMode="sold" để hiện lượt bán -->
   <section class="section">
     <div class="section-header">
       <h2><app-icon name="award" [size]="18" class="heading-icon" /><span>Hoa bán chạy nhất</span></h2>
@@ -94,7 +97,7 @@
     </div>
   </section>
 
-  <!-- 4. BAI VIET MOI NHAT (LOAD 3 BAI TU MANG > 3 BAI) -->
+  <!-- 4. MỤC BÀI VIẾT MỚI NHẤT: Hiển thị 3 bài mới nhất từ latestPosts(), truyền queryParams ?id=... để mở đọc ngay -->
   <section class="section posts-section">
     <div class="section-header">
       <h2><app-icon name="book-open" [size]="18" class="heading-icon" /><span>Bài viết mới nhất</span></h2>
@@ -123,7 +126,7 @@
   </section>
 }
 
-<!-- BANNER TRAI NGHIEM ATELIER -->
+<!-- BANNER TRẢI NGHIỆM ATELIER: Giới thiệu góc hậu trường cắm hoa, dẫn tới trang Video (/experience) -->
 <section class="atelier-banner">
   <div class="atelier-info">
     <span class="atelier-pill"><app-icon name="clapperboard" [size]="14" /><span>Atelier Experience</span></span>
@@ -134,7 +137,7 @@
   <img src="assets/flowers/hero-flower.jpg" alt="Góc Atelier FLEURÉ" class="atelier-thumb" />
 </section>
 
-<!-- CAM KET DICH VU -->
+<!-- KHỐI CAM KẾT DỊCH VỤ CỦA THƯƠNG HIỆU FLEURÉ -->
 <section class="features">
   <div class="feature">
     <span class="feature-icon"><app-icon name="flower-2" [size]="18" /></span>

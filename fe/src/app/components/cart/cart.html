@@ -1,3 +1,13 @@
+<!-- ===================================================================
+     CART – Trang Giỏ Hàng FLEURÉ
+     Luồng hiển thị:
+       1. orderPlaced() === true  → Màn hình xác nhận đơn hàng thành công
+       2. loading/error (giỏ trống) → DataState loading/error skeleton
+       3. cartItems.length > 0    → Danh sách sản phẩm + sidebar thanh toán
+       4. Giỏ trống               → Empty state với CTA chọn hoa
+=================================================================== -->
+
+<!-- Breadcrumb điều hướng -->
 <div class="breadcrumb">
   <a routerLink="/">Trang chủ</a> &gt; <span>Giỏ hàng</span>
 </div>
@@ -5,6 +15,7 @@
 <div class="cart-container">
   <h1><app-icon name="shopping-bag" [size]="22" class="heading-icon" /><span>Giỏ hàng FLEURÉ</span></h1>
 
+  <!-- TRƯỜNG HỢP 1: Đặt hàng thành công → hiển thị xác nhận -->
   @if (orderPlaced()) {
     <div class="success-card" role="status">
       <span class="success-icon"><app-icon name="circle-check" [size]="28" /></span>
@@ -34,6 +45,7 @@
         Tiếp tục chọn thêm hoa →
       </a>
     </div>
+  <!-- TRƯỜNG HỢP 2: Đang tải hoặc lỗi kết nối MongoDB (giỏ chưa có dữ liệu) -->
   } @else if ((shop.loading() || shop.error()) && shop.cartItems().length === 0) {
     <app-data-state
       [loading]="shop.loading()"
@@ -41,10 +53,14 @@
       loadingLabel="Đang đồng bộ giỏ hàng từ MongoDB..."
       (retry)="shop.loadCatalog()"
     />
+  <!-- TRƯỜNG HỢP 3 & 4: Giỏ có hàng hoặc giỏ trống -->
   } @else {
     @if (shop.cartItems().length > 0) {
+      <!-- Layout chính: danh sách sản phẩm bên trái + sidebar thanh toán bên phải -->
       <div class="cart-layout">
+        <!-- Danh sách sản phẩm trong giỏ -->
         <div class="cart-list">
+          <!-- Mỗi sản phẩm trong giỏ: ảnh thumbnail + tên + giá + điều chỉnh số lượng -->
           @for (item of shop.cartItems(); track item.product.id) {
             <div class="cart-item">
               <a [routerLink]="['/product', item.product.slug || item.product.id]" class="item-thumb">
@@ -95,6 +111,7 @@
         </div>
 
         <aside class="cart-sidebar" aria-label="Mã ưu đãi, thông tin giao hoa và tổng kết đơn hàng">
+          <!-- VOUCHER BOX: nhập và áp dụng mã giảm giá -->
           <!-- VOUCHER BOX -->
           <div class="voucher-box">
             <label for="voucherInput">Mã ưu đãi (FLEURE20, YEUHOA15, FREESHIP60)</label>
@@ -130,6 +147,7 @@
             }
           </div>
 
+          <!-- THÔNG TIN GIAO HÀNG: họ tên, SĐT, địa chỉ, ghi chú -->
           <!-- CUSTOMER INFO -->
           <div class="customer-box">
             <h2 class="box-title">Thông tin giao hoa hỏa tốc 60p</h2>
@@ -187,6 +205,7 @@
             </div>
           </div>
 
+          <!-- TỔNG KẾT ĐƠN HÀNG: subtotal, giảm giá, phí ship, tổng tiền + nút đặt hàng -->
           <!-- SUMMARY -->
           <div class="cart-summary">
             <div class="row">

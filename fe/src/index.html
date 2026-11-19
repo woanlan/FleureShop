@@ -1,16 +1,21 @@
 <!doctype html>
+<!-- Trang HTML khung duy nhất của ứng dụng Single Page Application (SPA) -->
 <html lang="vi">
 <head>
   <meta charset="utf-8">
   <title>FLEURÉ – Flower Boutique</title>
+  <!-- Đường dẫn gốc giúp Angular Router xử lý định tuyến các URL con như /product/:slug -->
   <base href="/">
+  <!-- Thiết lập tỷ lệ khung nhìn chuẩn thiết bị di động -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- Kết nối sớm và nạp phông chữ có chân Playfair Display tạo nét sang trọng cho tiêu đề -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- Thẻ gốc nơi Angular gắn (mount) Component App và hiển thị toàn bộ giao diện -->
   <app-root></app-root>
 </body>
 </html>

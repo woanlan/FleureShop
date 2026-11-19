@@ -1,3 +1,15 @@
+<!-- ===================================================================
+     EXPERIENCE – Trang Trải Nghiệm Video của FLEURÉ
+     Cấu trúc trang:
+       1. Tiêu đề trang (page-head)
+       2. Trình phát video chính (player-wrap) — hiển thị video đang chọn
+       3. Thanh lọc danh mục (cat-bar)
+       4. Danh sách video gợi ý (playlist-wrap)
+     
+     Dữ liệu: lấy từ MongoDB collection experiences qua ShopService.
+=================================================================== -->
+
+<!-- Breadcrumb điều hướng -->
 <div class="breadcrumb">
   <a routerLink="/">Trang chủ</a> &gt; <span>Trải nghiệm Video</span>
 </div>
@@ -8,6 +20,7 @@
   <p>Khám phá hậu trường chọn hoa sáng sớm tại studio, kỹ thuật phối giấy lụa và mẹo chăm hoa chuẩn Florist.</p>
 </section>
 
+<!-- TRÌNH PHÁT VIDEO CHÍNH: hiển thị video đang chọn + thông tin + sản phẩm liên kết -->
 <!-- VIDEO PLAYER CHINH -->
 @if (shop.loading() || shop.error()) {
   <app-data-state
@@ -70,6 +83,7 @@
 </section>
   }
 
+<!-- THANH LỌC DANH MỤC: Tất cả / Atelier / Kỹ thuật / Chăm hoa -->
 <!-- LOC CHUYEN MUC VIDEO -->
 <section class="cat-bar">
   @for (cat of categories; track cat) {
@@ -85,6 +99,7 @@
   }
 </section>
 
+<!-- DANH SÁCH VIDEO GỢI Ý: nhấn vào thẻ video để phát ở player chính -->
 <!-- PLAYLIST VIDEO -->
 <section class="playlist-wrap">
   <div class="section-header">

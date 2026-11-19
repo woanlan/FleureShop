@@ -1,6 +1,14 @@
+<!-- ===================================================================
+     FOOTER – Chân trang website FLEURÉ
+     Hiển thị: thông tin cửa hàng, giờ mở cửa, điều hướng nhanh, bản quyền.
+     Template thuần tĩnh — không có logic, dùng routerLink cho điều hướng.
+=================================================================== -->
 <footer class="footer">
-  <h3>FLEURÉ — Flower Boutique</h3>
+  <!-- Tên thương hiệu và slogan -->
+  <h3>FLEURÉ – Flower Boutique</h3>
   <p class="slogan">Gói chút hoa, gửi chút thương.</p>
+
+  <!-- Thông tin liên hệ: địa chỉ, điện thoại, giờ mở cửa -->
   <div class="footer-contact">
     <div class="footer-meta-row">
       <app-icon name="map-pin" [size]="14" />
@@ -15,6 +23,7 @@
     </div>
   </div>
 
+  <!-- Điều hướng nhanh đến các trang chính (aria-label cho screen reader) -->
   <nav class="footer-links" aria-label="Điều hướng chân trang">
     <a routerLink="/">Trang chủ</a>
     <a routerLink="/products">Sản phẩm</a>
@@ -24,6 +33,7 @@
     <a routerLink="/cart">Giỏ hàng</a>
   </nav>
 
+  <!-- Bản quyền -->
   <div class="copyright">
     © 2026 FLEURÉ Flower Boutique &bull; Tinh hoa hoa tươi nghệ thuật
   </div>

@@ -1,7 +1,9 @@
+<!-- THANH ĐIỀU HƯỚNG BREADCRUMB -->
 <div class="breadcrumb">
   <a routerLink="/">Trang chủ</a> &gt; <a routerLink="/products">Sản phẩm</a> &gt; <span>Chi tiết</span>
 </div>
 
+<!-- RẼ NHÁNH 3 TRẠNG THÁI: (1) Đang tải / Lỗi mạng -> (2) Có sản phẩm -> (3) Không tìm thấy mẫu hoa -->
 @if ((loadingDetail() && !product()) || (shop.error() && !product())) {
   <app-data-state
     [loading]="loadingDetail()"
@@ -10,6 +12,7 @@
     (retry)="shop.loadCatalog()"
   />
 } @else if (product(); as item) {
+  <!-- BỐ CỤC CHI TIẾT SẢN PHẨM 2 CỘT: Ảnh lớn bên trái và thông tin đặt hoa bên phải -->
   <article class="product-detail">
     <div class="detail-image">
       <img [src]="item.image" [alt]="item.name" width="600" height="600" />
@@ -26,6 +29,7 @@
 
       <h1 class="detail-title">{{ item.name }}</h1>
 
+      <!-- Khối hiển thị giá bán hiện tại, giá gốc gạch ngang (nếu có) và nhãn phần trăm giảm giá -->
       <div class="detail-price-box">
         <span class="price">{{ item.price }}</span>
         @if (item.oldPrice) {
@@ -38,6 +42,7 @@
 
       <p class="detail-desc">{{ item.description }}</p>
 
+      <!-- Hộp giải thích ý nghĩa loài hoa dành riêng cho trải nghiệm quà tặng FLEURÉ -->
       <div class="meaning-box">
         <strong><app-icon name="flower-2" [size]="15" /><span>Thông điệp loài hoa:</span></strong>
         <span>{{ item.meaning }}</span>
@@ -49,6 +54,7 @@
         <div class="item"><app-icon name="truck" [size]="15" /><span>Giao nhanh trong 60 phút nội thành</span></div>
       </div>
 
+      <!-- Bộ chọn số lượng gắn với linkedSignal quantity() (tự động reset về 1 khi đổi sang mẫu hoa khác) -->
       <div class="qty-row">
         <span>Số lượng</span>
         <div class="qty-controls">
@@ -65,6 +71,7 @@
         </div>
       </div>
 
+      <!-- Hai nút hành động chính: addToCart() giữ nguyên trang, còn buyNow() thêm giỏ rồi chuyển tới /cart -->
       <div class="detail-actions">
         <button type="button" class="btn-cart" (click)="addToCart()"><app-icon name="shopping-bag" [size]="15" /><span>Thêm vào giỏ</span></button>
         <button type="button" class="btn-buy-now" (click)="buyNow()">Mua ngay →</button>
@@ -76,7 +83,7 @@
     </div>
   </article>
 
-  <!-- SAN PHAM GOI Y -->
+  <!-- SẢN PHẨM GỢI Ý: Lặp qua relatedProducts() (loại trừ mẫu hoa đang xem) để gợi ý mua kèm -->
   <section class="related-section">
     <div class="section-header">
       <h2>Có thể bạn cũng thích</h2>
@@ -88,6 +95,7 @@
     </div>
   </section>
 } @else {
+  <!-- TRẠNG THÁI KHÔNG TÌM THẤY (404 MỀM): Hiển thị khi slug hoặc id trên URL không khớp sản phẩm nào -->
   <section class="not-found-wrap">
     <div class="not-found-card">
       <span class="not-found-icon"><app-icon name="flower-2" [size]="26" /></span>

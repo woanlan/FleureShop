@@ -1,5 +1,16 @@
+/**
+ * ============================================================================
+ * FILE: src/data/seedData.js
+ * VAI TRÒ TRONG KIẾN TRÚC MVC: Kho Dữ Liệu Mẫu Khởi Tạo (`Data` / Seed Dataset).
+ * Cung cấp dữ liệu gốc chuẩn hóa (kèm tự động sinh đường dẫn `slug` SEO và liên kết
+ * khóa ngoại danh mục) cho 5 bảng: Danh mục, Banner, Sản phẩm, Bài viết và Video trải nghiệm.
+ * Được sử dụng bởi `src/seed.js` khi chạy `npm run seed` hoặc tự động nạp lúc mở server.
+ * ============================================================================
+ */
+
 import { toSlug } from '../utils/slugify.js';
 
+/** 1. Dữ liệu mẫu cho bảng Danh mục hoa (`categories`) — gồm 5 dòng hoa chủ đạo của tiệm FLEURÉ. */
 export const CATEGORIES_SEED = [
   {
     id: 1,
@@ -43,8 +54,10 @@ export const CATEGORIES_SEED = [
   },
 ];
 
+// Bản đồ tra cứu nhanh thông tin danh mục theo tên tiếng Việt để tự động gắn categoryId & categorySlug cho sản phẩm
 const CATEGORY_MAP = new Map(CATEGORIES_SEED.map((c) => [c.name, c]));
 
+/** 2. Dữ liệu mẫu cho bảng Banner trình chiếu đầu trang chủ (`banners`) — gồm 3 slide Hero nổi bật. */
 export const BANNERS_SEED = [
   {
     id: 1,
@@ -303,6 +316,10 @@ const RAW_PRODUCTS = [
   },
 ];
 
+/**
+ * 3. Dữ liệu mẫu cho bảng Sản phẩm hoa (`products`) — 12 mẫu hoa được tự động sinh `slug` chuẩn SEO
+ * từ tên hoa và nối khóa ngoại `categoryId` + `categorySlug` khớp với bảng Danh mục.
+ */
 export const PRODUCTS_SEED = RAW_PRODUCTS.map((p) => {
   const cat = CATEGORY_MAP.get(p.category);
   return {
@@ -426,6 +443,7 @@ const RAW_POSTS = [
   },
 ];
 
+/** 4. Dữ liệu mẫu cho bảng Bài viết Cẩm nang hoa (`posts`) — 6 bài blog tự động kèm đường dẫn `slug` từ tiêu đề. */
 export const POSTS_SEED = RAW_POSTS.map((post) => ({
   ...post,
   slug: toSlug(post.title),
@@ -505,6 +523,7 @@ const RAW_EXPERIENCES = [
   },
 ];
 
+/** 5. Dữ liệu mẫu cho bảng Video Trải Nghiệm Atelier (`experiences`) — 4 video hướng dẫn kèm `slug` SEO. */
 export const EXPERIENCES_SEED = RAW_EXPERIENCES.map((exp) => ({
   ...exp,
   slug: toSlug(exp.title),

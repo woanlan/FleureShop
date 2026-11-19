@@ -1,21 +1,33 @@
+<!-- ===================================================================
+     PRODUCT CARD – Thẻ sản phẩm dùng chung trên toàn website FLEURÉ
+     Dùng tại: Trang chủ (nổi bật/bán chạy), Sản phẩm, Khuyến mãi.
+     Nhận input: product (bắt buộc) và badgeMode (tùy chọn, mặc định 'auto').
+=================================================================== -->
 <article class="product-card">
+
+  <!-- Vùng ảnh sản phẩm: nhấn vào → đến trang chi tiết sản phẩm -->
   <a [routerLink]="['/product', product().slug || product().id]" class="product-image">
     <img [src]="product().image" [alt]="product().name" />
 
+    <!-- Badge nhãn (Giảm giá / Bán chạy / NEW / badge riêng từ DB) — chỉ hiển thị khi có -->
     @if (badgeInfo(); as badge) {
       <span class="label" [class]="badge.cssClass">{{ badge.text }}</span>
     }
 
-      @if (badgeMode() === 'sold') {
-        <span class="sold-badge"><app-icon name="flame" [size]="13" /><span>Đã bán {{ product().sold }}</span></span>
-      }
+    <!-- Badge số lượng đã bán — chỉ hiện khi badgeMode === 'sold' -->
+    @if (badgeMode() === 'sold') {
+      <span class="sold-badge"><app-icon name="flame" [size]="13" /><span>Đã bán {{ product().sold }}</span></span>
+    }
   </a>
 
+  <!-- Thông tin sản phẩm: tên, giá, nút mua/xem chi tiết -->
   <div class="product-info">
     <h3 class="product-name">
+      <!-- Tên sản phẩm cũng là link đến trang chi tiết -->
       <a [routerLink]="['/product', product().slug || product().id]" class="product-name-link">{{ product().name }}</a>
     </h3>
 
+    <!-- Giá bán và giá gốc (giá gốc chỉ hiện khi sản phẩm đang giảm giá) -->
     <div class="price-row">
       <div class="price">{{ product().price }}</div>
       @if (product().oldPrice) {
@@ -23,7 +35,9 @@
       }
     </div>
 
+    <!-- Nút hành động: Mua ngay và Xem chi tiết -->
     <div class="product-actions">
+      <!-- Nút Mua: thêm 1 sản phẩm vào giỏ hàng qua onBuy() -->
       <button
         type="button"
         class="btn-buy"
@@ -33,6 +47,8 @@
         <app-icon name="shopping-bag" [size]="14" />
         <span>Mua</span>
       </button>
+
+      <!-- Nút Chi tiết: điều hướng đến trang /product/:slug -->
       <a
         [routerLink]="['/product', product().slug || product().id]"
         class="btn-detail"

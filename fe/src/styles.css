@@ -1,8 +1,11 @@
 /* ==========================================================================
-   FLEURÉ – FLOWER BOUTIQUE | THEME 02 • HỒNG PASTEL (PASTEL PINK & RUBY ROSE)
-   Lab 3 Global Styles & Shared Primitives
+   FLEURÉ – FLOWER BOUTIQUE | CHỦ ĐỀ HỒNG PASTEL & ĐỎ RUBY (PASTEL PINK & RUBY ROSE)
+   Tệp CSS toàn cục: Hệ thống biến màu (Design Tokens) & các thành phần dùng chung
    ========================================================================== */
 
+/* 1. Hệ thống biến CSS (Design Tokens) tại :root:
+   Quản lý tập trung bảng màu Hồng Pastel – Đỏ Ruby, màu chữ, đổ bóng, độ bo góc và phông chữ
+   để đồng bộ nhận diện thương hiệu trên toàn bộ ứng dụng. */
 :root {
   color-scheme: light;
   --pastel-bg: #fff5f7;
@@ -39,7 +42,7 @@
   box-sizing: border-box;
 }
 
-/* Autohide scrollbar (evondevKit I18) */
+/* 2. Thanh cuộn mảnh tự ẩn (Autohide Scrollbar) giúp khung giao diện gọn gàng */
 * {
   --scrollbar-thumb: transparent;
 }
@@ -92,7 +95,8 @@ body {
   min-height: 100vh;
 }
 
-/* Centered Mobile Frame Shell (max-width: 430px per user preference) */
+/* 3. Khung ứng dụng di động căn giữa trên màn hình máy tính (`.website` với `max-width: 430px` & `margin: 0 auto`)
+   Đáp ứng đúng yêu cầu số 1 của giảng viên: giữ bố cục chuẩn khung điện thoại sắc nét ngay cả khi mở trên Desktop. */
 .website {
   width: 100%;
   max-width: 430px;
@@ -157,7 +161,7 @@ textarea:focus-visible,
   outline-offset: 2px;
 }
 
-/* Shared Breadcrumb */
+/* 4. Thanh điều hướng phân cấp (Breadcrumb) dùng chung cho các trang con */
 .breadcrumb {
   padding: 14px 16px 6px;
   color: var(--text-muted);
@@ -187,7 +191,7 @@ textarea::placeholder {
   text-decoration: underline;
 }
 
-/* Shared Section Header */
+/* 5. Tiêu đề khu vực (Section Header) dùng chung kèm liên kết "Xem tất cả" */
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -225,7 +229,7 @@ textarea::placeholder {
   text-decoration: underline;
 }
 
-/* Shared Product Card Grid */
+/* 6. Lưới sản phẩm 2 cột (`.product-grid`) và kiểu dáng thẻ sản phẩm (`.product-card`) dùng chung toàn trang */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -409,7 +413,7 @@ textarea::placeholder {
   background: var(--ruby-soft);
 }
 
-/* Shared Toast Feedback */
+/* 7. Thanh thông báo nổi (`.toast-banner`) ghim cuối khung nhìn khi thêm/xóa giỏ hàng kèm nút Hoàn tác */
 .toast-banner {
   position: sticky;
   bottom: 14px;
@@ -487,6 +491,7 @@ textarea::placeholder {
   outline-offset: 2px;
 }
 
+/* Ẩn phần tử về mặt thị giác nhưng vẫn giữ nguyên cho trình đọc màn hình (Accessibility) */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -509,12 +514,15 @@ textarea::placeholder {
   align-items: center;
 }
 
+/* Xếp dọc 2 nút Mua / Chi tiết trên màn hình điện thoại siêu nhỏ (< 360px) để không bị tràn chữ */
 @media (max-width: 359px) {
   .product-actions {
     flex-direction: column;
   }
 }
 
+/* 8. Hỗ trợ tiếp cận (`prefers-reduced-motion`): tự động tắt hiệu ứng chuyển động/cuộn mượt
+   nếu người dùng bật chế độ giảm chuyển động trong cài đặt hệ điều hành */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

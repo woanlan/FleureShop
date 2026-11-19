@@ -1,6 +1,17 @@
-<!-- HEADER + THANH TIM KIEM FLEURE -->
+<!-- ===================================================================
+     HEADER – Thanh tiêu đề & thanh điều hướng chính của FLEURÉ
+     Gồm 2 phần:
+       1. <header>: logo thương hiệu + nút giỏ hàng + form tìm kiếm
+       2. <nav>:    điều hướng các trang chính
+     
+     Tìm kiếm: debounce 250ms trong header.ts, kết quả hiển thị ở /products
+     Giỏ hàng: số lượng lấy realtime từ shop.cartCount() (Signal)
+=================================================================== -->
+
+<!-- Phần đầu: logo + giỏ hàng + thanh tìm kiếm -->
 <header class="header">
   <div class="header-top">
+    <!-- Logo thương hiệu: nhấn vào → Trang chủ -->
     <a routerLink="/" class="brand-wrap">
       <app-icon name="flower-2" [size]="24" class="brand-flower-svg" />
       <div class="brand-text">
@@ -9,6 +20,7 @@
       </div>
     </a>
 
+    <!-- Nút giỏ hàng: hiển thị số lượng sản phẩm realtime từ Signal -->
     <a
       routerLink="/cart"
       class="cart-btn"
@@ -19,10 +31,14 @@
     </a>
   </div>
 
+  <!-- Form tìm kiếm sản phẩm (submit → /products?search=...) -->
   <form class="search" (submit)="onSearchSubmit($event)" role="search">
+    <!-- Nút kính lúp để submit form -->
     <button type="submit" class="search-submit-btn" aria-label="Tìm kiếm bó hoa">
       <app-icon name="search" [size]="16" class="search-icon" />
     </button>
+
+    <!-- Input tìm kiếm: (input) → debounce 250ms trước khi gọi API -->
     <input
       #searchInput
       type="search"
@@ -31,6 +47,8 @@
       [value]="shop.searchQuery()"
       (input)="onSearchInput($event)"
     />
+
+    <!-- Nút × xóa từ khóa (chỉ hiện khi đang có nội dung) -->
     @if (shop.searchQuery()) {
       <button type="button" class="clear-btn" (click)="clearSearch()" aria-label="Xóa từ khóa tìm kiếm">
         <app-icon name="x" [size]="14" />
@@ -39,7 +57,7 @@
   </form>
 </header>
 
-<!-- THANH DIEU HUONG -->
+<!-- Thanh điều hướng các trang chính (routerLinkActive tô sáng trang hiện tại) -->
 <nav class="nav" aria-label="Điều hướng chính">
   <a routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page" [routerLinkActiveOptions]="{ exact: true }">Trang chủ</a>
   <a routerLink="/products" routerLinkActive="active" ariaCurrentWhenActive="page">Sản phẩm</a>

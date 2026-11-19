@@ -1,3 +1,4 @@
+<!-- THANH ĐIỀU HƯỚNG BREADCRUMB: Tự động hiển thị thêm tên danh mục nếu đang lọc theo /category/:slug -->
 <div class="breadcrumb">
   <a routerLink="/">Trang chủ</a> &gt;
   @if (selectedCategorySlug() !== 'tat-ca') {
@@ -12,7 +13,8 @@
   <p>Chọn những bó hoa pastel dịu ngọt dành tặng người bạn yêu thương.</p>
 </section>
 
-<!-- DANH MUC SLUG (Tu collection categories trong MongoDB) -->
+<!-- THANH CHIP DANH MỤC ĐỘNG (Lấy từ collection categories trong MongoDB) -->
+<!-- Khi bấm chip, routerLink đổi sang /products hoặc /category/:slug mà không cần tải lại trang -->
 <section class="category-section">
   <h2 class="category-title">Danh mục hoa</h2>
 
@@ -31,7 +33,7 @@
   </div>
 </section>
 
-<!-- BO LOC SAP XEP -->
+<!-- BỘ LỌC 5 TUỲ CHỌN SẮP XẾP: Mới nhất, Bán chạy, Giảm giá, Giá thấp đến cao, Giá cao đến thấp -->
 <section class="filter-section">
   <div class="filter-title" id="sort-label">Sắp xếp theo</div>
 
@@ -54,7 +56,7 @@
   </div>
 </section>
 
-<!-- DANH SACH SAN PHAM -->
+<!-- KHU VỰC HIỂN THỊ LƯỚI SẢN PHẨM (Mỗi trang 6 mẫu hoa từ pagedProducts) -->
 @if (shop.loading() || shop.error()) {
   <app-data-state
     [loading]="shop.loading()"
@@ -77,6 +79,7 @@
           [badgeMode]="sortBy() === 'bestseller' ? 'sold' : 'auto'"
         />
       } @empty {
+        <!-- Nhánh @empty tự động hiển thị khi mảng pagedProducts() rỗng (không khớp từ khóa hoặc bộ lọc) -->
         <div class="empty-state">
           <span class="empty-icon"><app-icon name="flower-2" [size]="26" /></span>
           <p>Không tìm thấy bó hoa phù hợp với bộ lọc.</p>
@@ -87,7 +90,7 @@
   </section>
 }
 
-<!-- PHAN TRANG -->
+<!-- THANH PHÂN TRANG CLIENT-SIDE: Chỉ hiển thị khi tổng số trang lớn hơn 1 (totalPages() > 1) -->
 @if (totalPages() > 1) {
   <nav class="pagination" aria-label="Phân trang">
     <button
@@ -129,7 +132,7 @@
   </div>
 }
 
-<!-- BANNER -->
+<!-- BANNER GỢI Ý CUỐI TRANG: Dẫn khách hàng sang trang Khuyến mãi Flash Sale -->
 <aside class="promo-banner">
   <h3><app-icon name="flower-2" [size]="17" /><span>Gói chút hoa, gửi chút thương</span></h3>
   <p>Xem thêm ưu đãi Flash Sale -30% &amp; mã Freeship tại trang Khuyến mãi FLEURÉ.</p>

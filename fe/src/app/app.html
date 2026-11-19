@@ -1,16 +1,23 @@
+<!-- Khung giao diện mobile (max-width: 430px) căn giữa trên màn hình máy tính -->
 <div class="website">
+  <!-- Đầu trang dùng chung: Logo thương hiệu, giỏ hàng, thanh tìm kiếm và menu điều hướng -->
   <app-header></app-header>
+
   <main>
+    <!-- Vùng hiển thị động: Angular Router tự động thay thế bằng Component tương ứng với đường dẫn URL -->
     <router-outlet></router-outlet>
 
+    <!-- Vùng ẩn hỗ trợ trình đọc màn hình (Screen Reader) đọc to thông báo giỏ hàng cho người khiếm thị -->
     <div class="sr-only" role="status" aria-live="polite" aria-atomic="true">
       {{ shop.toastMessage() ?? '' }}
     </div>
 
+    <!-- Thanh thông báo nổi (Toast Banner) hiện lên khi thêm, xóa hoặc khôi phục sản phẩm trong giỏ -->
     @if (shop.toastMessage(); as msg) {
       <aside class="toast-banner" aria-label="Thông báo giỏ hàng">
         <span class="toast-text"><app-icon name="flower-2" [size]="15" /><span>{{ msg }}</span></span>
         <div class="toast-actions">
+          <!-- Chỉ hiển thị nút Hoàn tác khi người dùng vừa xóa một bó hoa khỏi giỏ hàng -->
           @if (shop.lastRemoved()) {
             <button type="button" class="toast-undo-btn" (click)="shop.undoRemove()">
               Hoàn tác
@@ -30,5 +37,6 @@
     }
   </main>
 
+  <!-- Chân trang dùng chung: Thông tin liên hệ cửa hàng và liên kết điều hướng nhanh -->
   <app-footer></app-footer>
 </div>

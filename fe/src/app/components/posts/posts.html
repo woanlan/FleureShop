@@ -1,3 +1,15 @@
+<!-- ===================================================================
+     POSTS – Trang Bài Viết FLEURÉ Journal
+     Cấu trúc:
+       1. Tiêu đề trang (page-head)
+       2. Side-reader (hiển thị khi activePost() có dữ liệu) — đọc bài trong trang
+       3. Thanh lọc chủ đề (cat-bar)
+       4. Danh sách bài viết (posts-wrap)
+     
+     Deep-link: /bai_viet?id=3 → tự động mở bài số 3 (xử lý trong posts.ts constructor)
+=================================================================== -->
+
+<!-- Breadcrumb điều hướng -->
 <div class="breadcrumb">
   <a routerLink="/">Trang chủ</a> &gt; <span>Bài viết</span>
 </div>
@@ -8,6 +20,7 @@
   <p>Tổng hợp {{ sortedPosts().length }} câu chuyện về ngôn ngữ loài hoa, cách gói chuẩn Pháp và mẹo giữ hoa tươi lâu.</p>
 </section>
 
+<!-- SIDE-READER: hiển thị bài viết đầy đủ khi người dùng nhấn "Đọc chi tiết" -->
 <!-- DOC BAI VIET CHI TIET -->
 @if (activePost(); as post) {
   <article id="post-reader" #readerCard tabindex="-1" class="reader-card">
@@ -55,6 +68,7 @@
   </article>
 }
 
+<!-- THANH LỌC CHỦ ĐỀ: Tất cả / Chăm sóc hoa / Ý nghĩa hoa / Nghệ thuật gói / Xu hướng -->
 <!-- LOC CHU DE -->
 <section class="cat-bar">
   @for (cat of categories; track cat) {
@@ -70,6 +84,7 @@
   }
 </section>
 
+<!-- DANH SÁCH BÀI VIẾT: lọc theo danh mục, sắp xếp mới nhất trước -->
 <!-- DANH SACH BAI VIET -->
 @if (shop.loading() || shop.error()) {
   <app-data-state
