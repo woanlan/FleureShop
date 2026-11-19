@@ -1,4 +1,6 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/asm-frontend/browser",
   "rewrites": [
     {
       "source": "/api/:path*",
