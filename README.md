@@ -1,6 +1,12 @@
 # FLEURÉ – Flower Boutique (Lab 4 & ASM 1 Full-Stack)
 
-Dự án được tách thành 2 thư mục rõ ràng **Backend (`asm/be`)** và **Frontend (`asm/fe`)**, sử dụng cơ sở dữ liệu **MongoDB** (`mongodb://127.0.0.1:27017/fleure_shop`).
+Dự án được tách thành 2 thư mục rõ ràng **Backend (`be/`)** và **Frontend (`fe/`)**, sử dụng cơ sở dữ liệu **MongoDB** (hỗ trợ cả Local `mongodb://127.0.0.1:27017/fleure_shop` và Cloud **MongoDB Atlas**).
+
+## Link Triển Khai Thực Tế (Live Demo)
+- **Website Frontend (Vercel):** https://fleure-shop-wcnk.vercel.app/
+- **Backend REST API (Render):** https://fleureshop.onrender.com
+- **Kiểm tra MongoDB Health Check:** https://fleureshop.onrender.com/api/health
+- **GitHub Repository:** https://github.com/woanlan/FleureShop
 
 ## Cấu trúc thư mục
 
