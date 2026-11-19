@@ -1,0 +1,114 @@
+<div class="breadcrumb">
+  <a routerLink="/">Trang chủ</a> &gt; <span>Khuyến mãi</span>
+</div>
+
+<!-- FLASH SALE HERO BANNER -->
+<section class="flash-wrap">
+  <div class="flash-card">
+    <span class="flash-pill"><app-icon name="sparkles" [size]="14" /><span>Flash Sale Hồng Pastel</span></span>
+    <h1>Ưu Đãi Mùa Yêu Thương Giảm Đến 30%</h1>
+    <p>Hoa Đà Lạt tươi mới cắt cành sáng nay &bull; Tặng thiệp viết tay FLEURÉ.</p>
+
+    <div class="timer-row">
+      <span class="timer-label">Kết thúc sau:</span>
+      <div class="timer-boxes" aria-label="Thời gian còn lại của Flash Sale">
+        <span class="time-box"><strong>{{ countdown().h }}</strong></span>:
+        <span class="time-box"><strong>{{ countdown().m }}</strong></span>:
+        <span class="time-box"><strong>{{ countdown().s }}</strong></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MA GIAM GIA (VOUCHER) -->
+<section class="voucher-section">
+  <div class="section-header">
+    <h2><app-icon name="ticket" [size]="18" class="heading-icon" /><span>Mã ưu đãi độc quyền</span></h2>
+  </div>
+
+  <div class="voucher-scroll" role="region" aria-label="Danh sách mã ưu đãi cuộn ngang">
+    @for (v of vouchers; track v.code) {
+      <div class="voucher-card">
+        <div class="voucher-code">{{ v.code }}</div>
+        <strong>{{ v.label }}</strong>
+        <p class="v-cond">{{ v.condition }}</p>
+        <button
+          type="button"
+          class="copy-btn"
+          [class.is-copied]="copiedCode() === v.code"
+          [attr.aria-label]="
+            copiedCode() === v.code
+              ? 'Đã sao chép mã ' + v.code
+              : 'Sao chép mã ưu đãi ' + v.code
+          "
+          (click)="copyVoucher(v.code)"
+        >
+          @if (copiedCode() === v.code) {
+            <span>Đã chép</span>
+            <app-icon name="check" [size]="14" />
+          } @else {
+            <span>Sao chép mã</span>
+          }
+        </button>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- BO LOC KHUYEN MAI -->
+<section class="promo-filter" aria-label="Bộ lọc sản phẩm khuyến mãi">
+  <button
+    type="button"
+    class="filter-pill"
+    [class.active]="filterMode() === 'all'"
+    [attr.aria-pressed]="filterMode() === 'all'"
+    (click)="setFilter('all')"
+  >
+    <app-icon name="sparkles" [size]="14" />
+    <span>Tất cả ưu đãi</span>
+  </button>
+  <button
+    type="button"
+    class="filter-pill"
+    [class.active]="filterMode() === 'deep'"
+    [attr.aria-pressed]="filterMode() === 'deep'"
+    (click)="setFilter('deep')"
+  >
+    <app-icon name="flame" [size]="14" />
+    <span>Giảm sâu ≥ 20%</span>
+  </button>
+  <button
+    type="button"
+    class="filter-pill"
+    [class.active]="filterMode() === 'under350'"
+    [attr.aria-pressed]="filterMode() === 'under350'"
+    (click)="setFilter('under350')"
+  >
+    <app-icon name="tag" [size]="14" />
+    <span>Dưới 350k</span>
+  </button>
+</section>
+
+<!-- DANH SACH SAN PHAM KHUYEN MAI -->
+@if (shop.loading() || shop.error()) {
+  <app-data-state
+    [loading]="shop.loading()"
+    [error]="shop.error()"
+    (retry)="shop.loadCatalog()"
+  />
+} @else {
+<section class="promo-products">
+  <div class="section-header">
+    <h2><app-icon name="badge-percent" [size]="18" class="heading-icon" /><span>Sản phẩm đang giảm giá</span></h2>
+    <span class="count-text">{{ discountedProducts().length }} mẫu hoa</span>
+  </div>
+
+  <div class="product-grid">
+    @for (product of discountedProducts(); track product.id) {
+      <app-product-card [product]="product" badgeMode="sale" />
+    } @empty {
+      <div class="empty-box" role="status">Không có sản phẩm phù hợp với bộ lọc này.</div>
+    }
+  </div>
+</section>
+}

@@ -1,0 +1,137 @@
+<div class="breadcrumb">
+  <a routerLink="/">Trang chủ</a> &gt;
+  @if (selectedCategorySlug() !== 'tat-ca') {
+    <a routerLink="/products">Sản phẩm</a> &gt; <span>{{ activeCategoryLabel() }}</span>
+  } @else {
+    <span>Sản phẩm</span>
+  }
+</div>
+
+<section class="page-heading">
+  <h1>Khám phá hoa tươi FLEURÉ</h1>
+  <p>Chọn những bó hoa pastel dịu ngọt dành tặng người bạn yêu thương.</p>
+</section>
+
+<!-- DANH MUC SLUG (Tu collection categories trong MongoDB) -->
+<section class="category-section">
+  <h2 class="category-title">Danh mục hoa</h2>
+
+  <div class="category-scroll">
+    @for (cat of categories(); track cat.slug) {
+      <a
+        class="category-item"
+        [routerLink]="cat.slug === 'tat-ca' ? '/products' : ['/category', cat.slug]"
+        [class.active]="selectedCategorySlug() === cat.slug"
+        [attr.aria-current]="selectedCategorySlug() === cat.slug ? 'page' : null"
+      >
+        <app-icon [name]="cat.icon" [size]="14" />
+        <span>{{ cat.label }}</span>
+      </a>
+    }
+  </div>
+</section>
+
+<!-- BO LOC SAP XEP -->
+<section class="filter-section">
+  <div class="filter-title" id="sort-label">Sắp xếp theo</div>
+
+  <div class="filter-options" role="radiogroup" aria-labelledby="sort-label">
+    @for (opt of sortOptions; track opt.value) {
+      <div class="filter-option">
+        <input
+          type="radio"
+          [id]="opt.value"
+          name="sort"
+          [checked]="sortBy() === opt.value"
+          (change)="selectSort(opt.value)"
+        />
+        <label [for]="opt.value">
+          <app-icon [name]="opt.icon" [size]="14" />
+          <span>{{ opt.label }}</span>
+        </label>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- DANH SACH SAN PHAM -->
+@if (shop.loading() || shop.error()) {
+  <app-data-state
+    [loading]="shop.loading()"
+    [error]="shop.error()"
+    (retry)="shop.loadCatalog()"
+  />
+} @else {
+  <section class="products-section">
+    <div class="products-heading">
+      <h2>{{ activeCategoryLabel() }}</h2>
+      <span class="product-count">
+        {{ pagedProducts().length }} / {{ filteredProducts().length }} mẫu
+      </span>
+    </div>
+
+    <div class="product-grid">
+      @for (product of pagedProducts(); track product.id) {
+        <app-product-card
+          [product]="product"
+          [badgeMode]="sortBy() === 'bestseller' ? 'sold' : 'auto'"
+        />
+      } @empty {
+        <div class="empty-state">
+          <span class="empty-icon"><app-icon name="flower-2" [size]="26" /></span>
+          <p>Không tìm thấy bó hoa phù hợp với bộ lọc.</p>
+          <button type="button" class="btn-reset" (click)="resetFilters()">Xem tất cả hoa</button>
+        </div>
+      }
+    </div>
+  </section>
+}
+
+<!-- PHAN TRANG -->
+@if (totalPages() > 1) {
+  <nav class="pagination" aria-label="Phân trang">
+    <button
+      type="button"
+      class="page-btn"
+      [disabled]="currentPage() === 1"
+      (click)="goToPage(currentPage() - 1)"
+      aria-label="Trang trước"
+    >
+      ‹
+    </button>
+
+    @for (page of pageNumbers(); track page) {
+      <button
+        type="button"
+        class="page-btn"
+        [class.active]="currentPage() === page"
+        [attr.aria-current]="currentPage() === page ? 'page' : null"
+        [attr.aria-label]="'Trang ' + page"
+        (click)="goToPage(page)"
+      >
+        {{ page }}
+      </button>
+    }
+
+    <button
+      type="button"
+      class="page-btn"
+      [disabled]="currentPage() === totalPages()"
+      (click)="goToPage(currentPage() + 1)"
+      aria-label="Trang sau"
+    >
+      ›
+    </button>
+  </nav>
+
+  <div class="pagination-info">
+    Trang {{ currentPage() }} / {{ totalPages() }}
+  </div>
+}
+
+<!-- BANNER -->
+<aside class="promo-banner">
+  <h3><app-icon name="flower-2" [size]="17" /><span>Gói chút hoa, gửi chút thương</span></h3>
+  <p>Xem thêm ưu đãi Flash Sale -30% &amp; mã Freeship tại trang Khuyến mãi FLEURÉ.</p>
+  <a routerLink="/promotions">Khám phá khuyến mãi →</a>
+</aside>

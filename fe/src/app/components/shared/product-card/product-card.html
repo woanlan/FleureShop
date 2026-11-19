@@ -1,0 +1,45 @@
+<article class="product-card">
+  <a [routerLink]="['/product', product().slug || product().id]" class="product-image">
+    <img [src]="product().image" [alt]="product().name" />
+
+    @if (badgeInfo(); as badge) {
+      <span class="label" [class]="badge.cssClass">{{ badge.text }}</span>
+    }
+
+      @if (badgeMode() === 'sold') {
+        <span class="sold-badge"><app-icon name="flame" [size]="13" /><span>Đã bán {{ product().sold }}</span></span>
+      }
+  </a>
+
+  <div class="product-info">
+    <h3 class="product-name">
+      <a [routerLink]="['/product', product().slug || product().id]" class="product-name-link">{{ product().name }}</a>
+    </h3>
+
+    <div class="price-row">
+      <div class="price">{{ product().price }}</div>
+      @if (product().oldPrice) {
+        <div class="old-price">{{ product().oldPrice }}</div>
+      }
+    </div>
+
+    <div class="product-actions">
+      <button
+        type="button"
+        class="btn-buy"
+        [attr.aria-label]="'Mua ' + product().name"
+        (click)="onBuy()"
+      >
+        <app-icon name="shopping-bag" [size]="14" />
+        <span>Mua</span>
+      </button>
+      <a
+        [routerLink]="['/product', product().slug || product().id]"
+        class="btn-detail"
+        [attr.aria-label]="'Chi tiết ' + product().name"
+      >
+        Chi tiết
+      </a>
+    </div>
+  </div>
+</article>

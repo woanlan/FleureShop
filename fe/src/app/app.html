@@ -1,0 +1,34 @@
+<div class="website">
+  <app-header></app-header>
+  <main>
+    <router-outlet></router-outlet>
+
+    <div class="sr-only" role="status" aria-live="polite" aria-atomic="true">
+      {{ shop.toastMessage() ?? '' }}
+    </div>
+
+    @if (shop.toastMessage(); as msg) {
+      <aside class="toast-banner" aria-label="Thông báo giỏ hàng">
+        <span class="toast-text"><app-icon name="flower-2" [size]="15" /><span>{{ msg }}</span></span>
+        <div class="toast-actions">
+          @if (shop.lastRemoved()) {
+            <button type="button" class="toast-undo-btn" (click)="shop.undoRemove()">
+              Hoàn tác
+            </button>
+          }
+          <a routerLink="/cart">Xem giỏ →</a>
+          <button
+            type="button"
+            class="toast-close-btn"
+            (click)="shop.dismissToast()"
+            aria-label="Đóng thông báo"
+          >
+            <app-icon name="x" [size]="14" />
+          </button>
+        </div>
+      </aside>
+    }
+  </main>
+
+  <app-footer></app-footer>
+</div>

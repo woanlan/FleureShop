@@ -1,0 +1,213 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 245, 247, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--ruby-border);
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-flower-svg {
+  width: 26px;
+  height: 26px;
+  color: var(--ruby-primary);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--ruby-primary);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.brand-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  margin-top: 3px;
+}
+
+.cart-btn {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ruby-light);
+  border: 1px solid var(--ruby-border);
+  color: var(--ruby-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.cart-btn:hover {
+  background: var(--ruby-soft);
+}
+
+.cart-btn:active {
+  background: var(--ruby-soft);
+}
+
+.cart-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: var(--ruby-primary);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 4px;
+  border-radius: 50%;
+  border: 2px solid var(--pastel-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(157, 37, 71, 0.28);
+}
+
+.search {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  background: #ffffff;
+  border: 1px solid rgba(157, 37, 71, 0.26);
+  border-radius: var(--radius-pill);
+  padding: 4px 8px 4px 8px;
+  box-shadow: 0 2px 8px rgba(157, 37, 71, 0.04);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search:focus-within {
+  border-color: var(--ruby-primary);
+  box-shadow: 0 0 0 3px rgba(157, 37, 71, 0.16);
+}
+
+.search:has(input:focus-visible) {
+  outline: 2px solid var(--ruby-primary);
+  outline-offset: 2px;
+}
+
+.search-submit-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ruby-primary);
+  flex-shrink: 0;
+  transition: background-color 0.2s ease;
+}
+
+.search-submit-btn:hover {
+  background: var(--ruby-light);
+}
+
+.search-icon {
+  color: inherit;
+  flex-shrink: 0;
+}
+
+.search input {
+  width: 100%;
+  min-width: 0;
+  min-height: 36px;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+  color: var(--text-main);
+}
+
+.search input::placeholder {
+  color: var(--text-light);
+}
+
+.clear-btn {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ruby-primary);
+  background: var(--ruby-light);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease;
+}
+
+.clear-btn:hover {
+  background: var(--ruby-soft);
+}
+
+/* NAV BAR */
+.nav {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  gap: 6px;
+  background: var(--ruby-primary);
+  padding: 8px 12px;
+}
+
+.nav a {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #ffffff;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 8px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav a:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+}
+
+.nav a:focus-visible {
+  outline-color: #ffffff;
+}
+
+.nav a.active {
+  background: #ffffff;
+  color: var(--ruby-primary);
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(90, 20, 40, 0.18);
+}

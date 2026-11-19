@@ -1,0 +1,130 @@
+<div class="breadcrumb">
+  <a routerLink="/">Trang chủ</a> &gt; <span>Trải nghiệm Video</span>
+</div>
+
+<section class="page-head">
+  <span class="page-pill"><app-icon name="clapperboard" [size]="14" /><span>Atelier Studio</span></span>
+  <h1>Trải Nghiệm Nghệ Thuật Bó Hoa FLEURÉ</h1>
+  <p>Khám phá hậu trường chọn hoa sáng sớm tại studio, kỹ thuật phối giấy lụa và mẹo chăm hoa chuẩn Florist.</p>
+</section>
+
+<!-- VIDEO PLAYER CHINH -->
+@if (shop.loading() || shop.error()) {
+  <app-data-state
+    [loading]="shop.loading()"
+    [error]="shop.error()"
+    loadingLabel="Đang tải danh sách video từ MongoDB..."
+    (retry)="shop.loadCatalog()"
+  />
+} @else {
+  @if (activeVideo(); as currentVideo) {
+<section class="player-wrap">
+  <div id="video-player-card" #playerCard tabindex="-1" class="player-card">
+    <div class="video-frame">
+      <video
+        [src]="currentVideo.videoUrl"
+        [poster]="currentVideo.posterImage"
+        [attr.aria-label]="currentVideo.title"
+        controls
+        playsinline
+        muted
+        preload="metadata"
+      ></video>
+      <span class="duration-pill"><app-icon name="clock" [size]="12" /><span>{{ currentVideo.duration }}</span></span>
+    </div>
+
+    <div class="player-body">
+      <div class="player-meta">
+        <span class="cat-badge">{{ currentVideo.category }}</span>
+        <span class="view-count"><app-icon name="eye" [size]="14" /><span>{{ getViews(currentVideo) }} lượt xem</span></span>
+      </div>
+
+      <h2>{{ currentVideo.title }}</h2>
+      <p class="player-sub">{{ currentVideo.subtitle }}</p>
+
+      <div class="steps-box">
+        <h3><app-icon name="sparkles" [size]="14" /><span>Quy trình thực hiện trong video</span></h3>
+        <ol>
+          @for (step of currentVideo.steps; track $index) {
+            <li>{{ step }}</li>
+          }
+        </ol>
+      </div>
+
+      @if (linkedProduct(); as item) {
+        <div class="video-product">
+          <img [src]="item.image" [alt]="item.name" />
+          <div class="vp-info">
+            <small>Mẫu hoa trong video</small>
+            <strong>{{ item.name }}</strong>
+            <span>{{ item.price }}</span>
+          </div>
+          <div class="vp-actions">
+            <button type="button" class="btn-buy-sm" (click)="buyLinkedProduct()"><app-icon name="shopping-bag" [size]="14" /><span>Đặt</span></button>
+            <a [routerLink]="['/product', item.slug || item.id]" class="btn-view-sm">Chi tiết</a>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+  }
+
+<!-- LOC CHUYEN MUC VIDEO -->
+<section class="cat-bar">
+  @for (cat of categories; track cat) {
+    <button
+      type="button"
+      class="cat-chip"
+      [class.active]="selectedCategory() === cat"
+      [attr.aria-pressed]="selectedCategory() === cat"
+      (click)="selectCategory(cat)"
+    >
+      {{ cat }}
+    </button>
+  }
+</section>
+
+<!-- PLAYLIST VIDEO -->
+<section class="playlist-wrap">
+  <div class="section-header">
+    <h2><app-icon name="film" [size]="18" class="heading-icon" /><span>Khoảnh khắc Atelier khác</span></h2>
+    <span class="count-label">{{ filteredVideos().length }} video</span>
+  </div>
+
+  <div class="playlist-grid">
+    @for (video of filteredVideos(); track video.id) {
+      <article class="video-item" [class.active]="activeVideo()?.id === video.id">
+        <div class="thumb-box">
+          <img [src]="video.posterImage" [alt]="video.title" />
+          <span class="play-badge" aria-hidden="true"><app-icon name="play" [size]="13" /></span>
+          <span class="time-badge">{{ video.duration }}</span>
+        </div>
+        <div class="video-meta">
+          <span class="v-cat">{{ video.category }}</span>
+          <h3>{{ video.title }}</h3>
+          <div class="video-foot">
+            <small><app-icon name="eye" [size]="13" /><span>{{ getViews(video) }} lượt xem</span></small>
+            <button
+              type="button"
+              class="video-watch-btn card-stretched-btn"
+              [attr.aria-pressed]="activeVideo()?.id === video.id"
+              [attr.aria-label]="'Phát video: ' + video.title"
+              (click)="selectVideo(video.id)"
+            >
+              @if (activeVideo()?.id === video.id) {
+                <span>Đang phát</span>
+                <app-icon name="check" [size]="13" />
+              } @else {
+                <span>Xem →</span>
+              }
+            </button>
+          </div>
+        </div>
+      </article>
+    } @empty {
+      <div class="empty-playlist">Chưa có video trong chuyên mục này.</div>
+    }
+  </div>
+</section>
+}

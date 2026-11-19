@@ -1,0 +1,151 @@
+<!-- HERO BANNER FLEURE (Tu collection banners trong MongoDB) -->
+@if (activeSlide(); as slide) {
+  <section class="hero-section">
+    <div class="hero-card">
+      <div class="hero-content">
+        <span class="hero-pill">{{ slide.badge }}</span>
+        <h1 class="hero-title">{{ slide.title }}</h1>
+        <p class="hero-desc">{{ slide.subtitle }}</p>
+        <a [routerLink]="slide.ctaRoute" class="btn-hero">
+          {{ slide.ctaLabel }}
+        </a>
+      </div>
+
+      <div class="hero-visual">
+        <img [src]="slide.image" [alt]="slide.title" />
+      </div>
+
+      <div class="hero-dots" role="group" aria-label="Chọn banner">
+        @for (item of slides(); track item.id; let idx = $index) {
+          <button
+            type="button"
+            class="dot"
+            [class.active]="currentSlideIndex() === idx"
+            [attr.aria-pressed]="currentSlideIndex() === idx"
+            (click)="selectSlide(idx)"
+            [attr.aria-label]="'Banner ' + (idx + 1)"
+          ></button>
+        }
+      </div>
+    </div>
+  </section>
+}
+
+@if (shop.loading() || shop.error()) {
+  <app-data-state
+    [loading]="shop.loading()"
+    [error]="shop.error()"
+    (retry)="shop.loadCatalog()"
+  />
+} @else {
+  <!-- 1. HOA MOI VE -->
+  <section class="section">
+    <div class="section-header">
+      <h2><app-icon name="sparkles" [size]="18" class="heading-icon" /><span>Hoa tươi mới về</span></h2>
+      <a routerLink="/products" class="see-all">Xem tất cả →</a>
+    </div>
+    <p class="subtitle">Cập nhật những thiết kế pastel vừa ra mắt trong tuần</p>
+
+    <div class="product-grid">
+      @for (product of newProducts(); track product.id) {
+        <app-product-card [product]="product" badgeMode="new" />
+      }
+    </div>
+  </section>
+
+  <!-- PROMO BANNER 1 -->
+  <section class="promo-banner">
+    <img src="assets/flowers/banner-orchid.jpg" alt="Ưu đãi FLEURÉ" />
+    <div class="promo-content">
+      <span class="promo-tag">Ưu đãi độc quyền</span>
+      <h3>Ngọt Ngào Trao Tay – Giảm Đến 30%</h3>
+      <p>Tặng thiệp viết tay &amp; Freeship đơn từ 399k</p>
+      <a routerLink="/promotions" class="btn-white">Xem khuyến mãi →</a>
+    </div>
+  </section>
+
+  <!-- 2. HOA DANG KHUYEN MAI -->
+  <section class="section">
+    <div class="section-header">
+      <h2><app-icon name="badge-percent" [size]="18" class="heading-icon" /><span>Hoa đang giảm giá</span></h2>
+      <a routerLink="/promotions" class="see-all">Tất cả ưu đãi →</a>
+    </div>
+    <p class="subtitle">Ưu đãi giới hạn hôm nay — Số lượng có hạn</p>
+
+    <div class="product-grid">
+      @for (product of saleProducts(); track product.id) {
+        <app-product-card [product]="product" badgeMode="sale" />
+      }
+    </div>
+  </section>
+
+  <!-- 3. HOA BAN CHAY NHAT -->
+  <section class="section">
+    <div class="section-header">
+      <h2><app-icon name="award" [size]="18" class="heading-icon" /><span>Hoa bán chạy nhất</span></h2>
+      <a routerLink="/products" class="see-all">Xem bảng xếp hạng →</a>
+    </div>
+    <p class="subtitle">Top mẫu hoa được khách hàng FLEURÉ yêu thích &amp; đặt nhiều nhất</p>
+
+    <div class="product-grid">
+      @for (product of bestSellingProducts(); track product.id) {
+        <app-product-card [product]="product" badgeMode="sold" />
+      }
+    </div>
+  </section>
+
+  <!-- 4. BAI VIET MOI NHAT (LOAD 3 BAI TU MANG > 3 BAI) -->
+  <section class="section posts-section">
+    <div class="section-header">
+      <h2><app-icon name="book-open" [size]="18" class="heading-icon" /><span>Bài viết mới nhất</span></h2>
+      <a routerLink="/bai_viet" class="see-all">Xem tất cả ({{ posts().length }}) →</a>
+    </div>
+    <p class="subtitle">Tạp chí FLEURÉ &bull; 3 bài viết mới nhất trong tổng số {{ posts().length }} bài</p>
+
+    <div class="post-list">
+      @for (post of latestPosts(); track post.id) {
+        <a [routerLink]="['/bai_viet']" [queryParams]="{ id: post.id }" class="post-card">
+          <div class="post-thumb">
+            <img [src]="post.image" [alt]="post.title" />
+          </div>
+          <div class="post-body">
+            <div class="post-meta">
+              <span class="post-cat">{{ post.category }}</span>
+              <span class="post-date">{{ post.publishedAt }}</span>
+            </div>
+            <h3 class="post-title">{{ post.title }}</h3>
+            <p class="post-excerpt">{{ post.excerpt }}</p>
+            <span class="post-read-more">Đọc tiếp ({{ post.readTimeMinutes }} phút) →</span>
+          </div>
+        </a>
+      }
+    </div>
+  </section>
+}
+
+<!-- BANNER TRAI NGHIEM ATELIER -->
+<section class="atelier-banner">
+  <div class="atelier-info">
+    <span class="atelier-pill"><app-icon name="clapperboard" [size]="14" /><span>Atelier Experience</span></span>
+    <h3>Khám Phá Hậu Trường Gói Hoa</h3>
+    <p>Xem video hướng dẫn cắm hoa pastel &amp; mẹo giữ hoa tươi 7 ngày tại nhà.</p>
+    <a routerLink="/experience" class="btn-ruby-outline">Xem video trải nghiệm →</a>
+  </div>
+  <img src="assets/flowers/hero-flower.jpg" alt="Góc Atelier FLEURÉ" class="atelier-thumb" />
+</section>
+
+<!-- CAM KET DICH VU -->
+<section class="features">
+  <div class="feature">
+    <span class="feature-icon"><app-icon name="flower-2" [size]="18" /></span>
+    <span>100% Hoa Đà Lạt</span>
+  </div>
+  <div class="feature">
+    <span class="feature-icon"><app-icon name="truck" [size]="18" /></span>
+    <span>Giao Nhanh 60 Phút</span>
+  </div>
+  <div class="feature">
+    <span class="feature-icon"><app-icon name="mail" [size]="18" /></span>
+    <span>Thiệp Tay Miễn Phí</span>
+  </div>
+</section>

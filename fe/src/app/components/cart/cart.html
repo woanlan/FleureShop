@@ -1,0 +1,247 @@
+<div class="breadcrumb">
+  <a routerLink="/">Trang chủ</a> &gt; <span>Giỏ hàng</span>
+</div>
+
+<div class="cart-container">
+  <h1><app-icon name="shopping-bag" [size]="22" class="heading-icon" /><span>Giỏ hàng FLEURÉ</span></h1>
+
+  @if (orderPlaced()) {
+    <div class="success-card" role="status">
+      <span class="success-icon"><app-icon name="circle-check" [size]="28" /></span>
+      <h2>Đặt hoa thành công!</h2>
+      @if (lastOrder(); as order) {
+        <div class="order-receipt">
+          <div class="receipt-badge">Mã đơn: {{ order.orderCode }} &bull; Đã lưu MongoDB</div>
+          <div class="receipt-row">
+            <span>Người nhận</span>
+            <strong>{{ order.customer.fullName }} ({{ order.customer.phone }})</strong>
+          </div>
+          <div class="receipt-row">
+            <span>Địa chỉ giao</span>
+            <strong>{{ order.customer.address }}</strong>
+          </div>
+          <div class="receipt-row total">
+            <span>Tổng thanh toán</span>
+            <strong>{{ formatVnd(order.grandTotal) }}</strong>
+          </div>
+        </div>
+      } @else {
+        <p>
+          Cảm ơn bạn đã chọn FLEURÉ. Bó hoa tươi kèm thiệp viết tay sẽ được giao hỏa tốc trong 60 phút.
+        </p>
+      }
+      <a routerLink="/products" class="btn-checkout" (click)="continueShoppingAfterOrder()">
+        Tiếp tục chọn thêm hoa →
+      </a>
+    </div>
+  } @else if ((shop.loading() || shop.error()) && shop.cartItems().length === 0) {
+    <app-data-state
+      [loading]="shop.loading()"
+      [error]="shop.error()"
+      loadingLabel="Đang đồng bộ giỏ hàng từ MongoDB..."
+      (retry)="shop.loadCatalog()"
+    />
+  } @else {
+    @if (shop.cartItems().length > 0) {
+      <div class="cart-layout">
+        <div class="cart-list">
+          @for (item of shop.cartItems(); track item.product.id) {
+            <div class="cart-item">
+              <a [routerLink]="['/product', item.product.slug || item.product.id]" class="item-thumb">
+                <img
+                  [src]="item.product.image"
+                  [alt]="item.product.name"
+                  width="84"
+                  height="84"
+                />
+              </a>
+              <div class="item-info">
+                <div class="item-head">
+                  <h2 class="item-name">
+                    <a [routerLink]="['/product', item.product.slug || item.product.id]" class="item-title-link">
+                      {{ item.product.name }}
+                    </a>
+                  </h2>
+                  <button
+                    type="button"
+                    class="remove-btn"
+                    (click)="shop.removeItem(item.product.id)"
+                    [attr.aria-label]="'Xóa ' + item.product.name + ' khỏi giỏ hàng'"
+                  >
+                    <app-icon name="x" [size]="14" />
+                  </button>
+                </div>
+                <div class="item-price">{{ item.product.price }}</div>
+                <div class="qty-bar">
+                  <button
+                    type="button"
+                    (click)="shop.updateQuantity(item.product.id, -1)"
+                    [attr.aria-label]="'Giảm số lượng ' + item.product.name"
+                  >
+                    −
+                  </button>
+                  <span aria-live="polite">{{ item.quantity }}</span>
+                  <button
+                    type="button"
+                    (click)="shop.updateQuantity(item.product.id, 1)"
+                    [attr.aria-label]="'Tăng số lượng ' + item.product.name"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <aside class="cart-sidebar" aria-label="Mã ưu đãi, thông tin giao hoa và tổng kết đơn hàng">
+          <!-- VOUCHER BOX -->
+          <div class="voucher-box">
+            <label for="voucherInput">Mã ưu đãi (FLEURE20, YEUHOA15, FREESHIP60)</label>
+            <div class="voucher-row">
+              <input
+                id="voucherInput"
+                type="text"
+                name="voucherCode"
+                autocomplete="off"
+                placeholder="Nhập mã giảm giá..."
+                [value]="voucherInput()"
+                [attr.aria-invalid]="voucherStatus() === 'error'"
+                [attr.aria-describedby]="voucherFeedback() ? 'voucher-feedback' : null"
+                (input)="onVoucherInput($event)"
+                (keydown.enter)="applyVoucher()"
+              />
+              <button type="button" (click)="applyVoucher()">Áp dụng</button>
+            </div>
+            @if (voucherFeedback(); as msg) {
+              <p
+                id="voucher-feedback"
+                class="voucher-msg"
+                [class.is-success]="voucherStatus() === 'success'"
+                [class.is-error]="voucherStatus() === 'error'"
+                [attr.role]="voucherStatus() === 'error' ? 'alert' : 'status'"
+              >
+                <app-icon
+                  [name]="voucherStatus() === 'success' ? 'circle-check' : 'circle-alert'"
+                  [size]="15"
+                />
+                <span>{{ msg }}</span>
+              </p>
+            }
+          </div>
+
+          <!-- CUSTOMER INFO -->
+          <div class="customer-box">
+            <h2 class="box-title">Thông tin giao hoa hỏa tốc 60p</h2>
+
+            <div class="field-group">
+              <label for="customerName">Họ và tên người nhận</label>
+              <input
+                id="customerName"
+                type="text"
+                name="fullName"
+                autocomplete="name"
+                placeholder="VD: Nguyễn Minh Thư"
+                [value]="customerName()"
+                (input)="onCustomerFieldInput('name', $event)"
+              />
+            </div>
+
+            <div class="field-group">
+              <label for="customerPhone">Số điện thoại liên hệ</label>
+              <input
+                id="customerPhone"
+                type="tel"
+                inputmode="tel"
+                name="phone"
+                autocomplete="tel"
+                placeholder="VD: 0909 123 456"
+                [value]="customerPhone()"
+                (input)="onCustomerFieldInput('phone', $event)"
+              />
+            </div>
+
+            <div class="field-group">
+              <label for="customerAddress">Địa chỉ giao hoa (TP.HCM)</label>
+              <input
+                id="customerAddress"
+                type="text"
+                name="address"
+                autocomplete="street-address"
+                placeholder="VD: 45 Nguyễn Huệ, Quận 1, TP.HCM"
+                [value]="customerAddress()"
+                (input)="onCustomerFieldInput('address', $event)"
+              />
+            </div>
+
+            <div class="field-group">
+              <label for="customerNote">Lời nhắn thiệp viết tay (tuỳ chọn)</label>
+              <textarea
+                id="customerNote"
+                name="note"
+                rows="2"
+                placeholder="Chúc mừng sinh nhật thật dịu dàng..."
+                [value]="customerNote()"
+                (input)="onCustomerFieldInput('note', $event)"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- SUMMARY -->
+          <div class="cart-summary">
+            <div class="row">
+              <span>Tạm tính ({{ shop.cartCount() }} sản phẩm)</span>
+              <span>{{ formatVnd(shop.cartSubtotal()) }}</span>
+            </div>
+            @if (voucherDiscount() > 0) {
+              <div class="row discount-row">
+                <span>Giảm giá mã ({{ appliedVoucher() }})</span>
+                <span>-{{ formatVnd(voucherDiscount()) }}</span>
+              </div>
+            }
+            <div class="row">
+              <span>Phí giao hoa hỏa tốc 60p</span>
+              @if (shippingFee() === 0) {
+                <span class="free">Miễn phí</span>
+              } @else {
+                <span>{{ formatVnd(shippingFee()) }}</span>
+              }
+            </div>
+            <div class="total-row">
+              <span>Tổng thanh toán</span>
+              <span class="total-price">{{ formatVnd(grandTotal()) }}</span>
+            </div>
+
+            @if (checkoutError(); as cErr) {
+              <p class="voucher-msg is-error checkout-error" role="alert">
+                <app-icon name="circle-alert" [size]="15" />
+                <span>{{ cErr }}</span>
+              </p>
+            }
+
+            <button
+              type="button"
+              class="btn-checkout"
+              [disabled]="submittingOrder()"
+              (click)="checkout()"
+            >
+              @if (submittingOrder()) {
+                <span>Đang lưu đơn hàng vào MongoDB...</span>
+              } @else {
+                <span>Đặt hoa ngay ({{ formatVnd(grandTotal()) }})</span>
+              }
+            </button>
+            <a routerLink="/products" class="btn-continue">← Tiếp tục chọn hoa</a>
+          </div>
+        </aside>
+      </div>
+    } @else {
+      <div class="empty-cart">
+        <span class="empty-icon"><app-icon name="flower-2" [size]="28" /></span>
+        <h2>Giỏ hàng đang trống</h2>
+        <p>Hãy chọn một bó hoa pastel xinh xắn để gửi trao yêu thương nhé.</p>
+        <a routerLink="/products" class="btn-checkout">Khám phá hoa ngay →</a>
+      </div>
+    }
+  }
+</div>

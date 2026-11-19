@@ -1,0 +1,50 @@
+<!-- HEADER + THANH TIM KIEM FLEURE -->
+<header class="header">
+  <div class="header-top">
+    <a routerLink="/" class="brand-wrap">
+      <app-icon name="flower-2" [size]="24" class="brand-flower-svg" />
+      <div class="brand-text">
+        <span class="brand-name">FLEURÉ</span>
+        <span class="brand-sub">FLOWER BOUTIQUE</span>
+      </div>
+    </a>
+
+    <a
+      routerLink="/cart"
+      class="cart-btn"
+      [attr.aria-label]="'Giỏ hàng (' + shop.cartCount() + ' sản phẩm)'"
+    >
+      <app-icon name="shopping-bag" [size]="20" />
+      <span class="cart-badge">{{ shop.cartCount() }}</span>
+    </a>
+  </div>
+
+  <form class="search" (submit)="onSearchSubmit($event)" role="search">
+    <button type="submit" class="search-submit-btn" aria-label="Tìm kiếm bó hoa">
+      <app-icon name="search" [size]="16" class="search-icon" />
+    </button>
+    <input
+      #searchInput
+      type="search"
+      placeholder="Tìm bó hoa, hồng pastel, tulip..."
+      aria-label="Tìm kiếm hoa tươi"
+      [value]="shop.searchQuery()"
+      (input)="onSearchInput($event)"
+    />
+    @if (shop.searchQuery()) {
+      <button type="button" class="clear-btn" (click)="clearSearch()" aria-label="Xóa từ khóa tìm kiếm">
+        <app-icon name="x" [size]="14" />
+      </button>
+    }
+  </form>
+</header>
+
+<!-- THANH DIEU HUONG -->
+<nav class="nav" aria-label="Điều hướng chính">
+  <a routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page" [routerLinkActiveOptions]="{ exact: true }">Trang chủ</a>
+  <a routerLink="/products" routerLinkActive="active" ariaCurrentWhenActive="page">Sản phẩm</a>
+  <a routerLink="/promotions" routerLinkActive="active" ariaCurrentWhenActive="page">Khuyến mãi</a>
+  <a routerLink="/bai_viet" routerLinkActive="active" ariaCurrentWhenActive="page">Bài viết</a>
+  <a routerLink="/experience" routerLinkActive="active" ariaCurrentWhenActive="page">Trải nghiệm</a>
+  <a routerLink="/cart" routerLinkActive="active" ariaCurrentWhenActive="page">Giỏ hàng</a>
+</nav>

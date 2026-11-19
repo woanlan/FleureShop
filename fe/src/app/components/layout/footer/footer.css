@@ -1,0 +1,86 @@
+.footer {
+  background: #4a1223;
+  color: #ffffff;
+  padding: 24px 18px;
+  margin-top: auto;
+  border-top: 2px solid rgba(253, 226, 232, 0.25);
+}
+
+.footer h3 {
+  font-family: var(--font-serif);
+  color: #fde2e8;
+  margin: 0 0 4px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.footer .slogan {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: #f9a8d4;
+  font-size: 13px;
+  margin: 0 0 12px;
+}
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: #f3dce3;
+  font-size: 12px;
+  line-height: 1.55;
+  margin: 0 0 12px;
+}
+
+.footer-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer-meta-row app-icon {
+  color: #f9a8d4;
+}
+
+.meta-dot {
+  opacity: 0.7;
+}
+
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin: 14px 0;
+  font-size: 12.5px;
+}
+
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 36px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  color: #fce7f3;
+  font-weight: 600;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.footer-links a:focus-visible {
+  outline-color: #fde2e8;
+}
+
+.copyright {
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  padding-top: 14px;
+  text-align: center;
+  font-size: 12px;
+  color: #f0d0da;
+}

@@ -1,0 +1,289 @@
+.flash-wrap {
+  padding: 6px 16px 14px;
+}
+
+.flash-card {
+  background-color: #661027;
+  background-image: linear-gradient(135deg, #661027 0%, #881b3a 52%, #a32248 100%);
+  border-radius: 22px;
+  padding: 18px 16px;
+  color: #ffffff;
+  box-shadow: var(--shadow-hover);
+}
+
+.flash-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #4f0b1d;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 10px;
+}
+
+.flash-card h1 {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  color: #ffffff;
+  margin: 0 0 6px;
+  line-height: 1.28;
+  font-variant-numeric: tabular-nums;
+}
+
+.flash-card p {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #fde2e8;
+  margin: 0 0 14px;
+}
+
+.timer-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.timer-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #fde2e8;
+}
+
+.timer-boxes {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 800;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-boxes span,
+.time-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: var(--ruby-primary);
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 13px;
+  min-width: 32px;
+  min-height: 28px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.time-box strong {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+/* VOUCHERS */
+.voucher-section {
+  padding: 2px 0 14px;
+  min-width: 0;
+}
+
+.voucher-section .section-header {
+  padding: 0 16px;
+}
+
+.voucher-scroll {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  scroll-snap-type: x proximity;
+  scroll-padding-left: 16px;
+  padding: 4px 28px 10px 16px;
+  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 calc(100% - 24px), transparent 100%);
+  mask-image: linear-gradient(to right, #000 0%, #000 calc(100% - 24px), transparent 100%);
+}
+
+.voucher-scroll:hover,
+.voucher-scroll:focus-within {
+  scrollbar-color: rgba(157, 37, 71, 0.32) transparent;
+}
+
+.voucher-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.voucher-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
+}
+
+.voucher-scroll:hover::-webkit-scrollbar-thumb,
+.voucher-scroll:focus-within::-webkit-scrollbar-thumb {
+  background: rgba(157, 37, 71, 0.32);
+}
+
+.voucher-card {
+  flex: 0 0 224px;
+  scroll-snap-align: start;
+  background: var(--pastel-surface);
+  border: 1.5px dashed rgba(157, 37, 71, 0.35);
+  border-radius: 16px;
+  padding: 13px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.voucher-card:hover {
+  border-color: var(--ruby-primary);
+}
+
+.voucher-code {
+  display: inline-block;
+  align-self: flex-start;
+  background: var(--ruby-light);
+  color: var(--ruby-primary);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  padding: 3px 9px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.voucher-card strong {
+  font-size: 13.5px;
+  line-height: 1.35;
+  color: var(--text-title);
+  margin-bottom: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.voucher-card p,
+.v-cond {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-muted);
+  margin: 0 0 12px;
+  flex: 1;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  background: var(--ruby-primary);
+  color: #ffffff;
+  border-radius: var(--radius-pill);
+  transition: background-color 0.2s ease;
+}
+
+.copy-btn:hover {
+  background: var(--ruby-hover);
+}
+
+.copy-btn.is-copied {
+  background: var(--success);
+  color: #ffffff;
+}
+
+.copy-btn.is-copied:hover {
+  background: var(--success);
+}
+
+/* FILTERS */
+.promo-filter {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  width: 100%;
+  max-width: 100%;
+  padding: 2px 16px 12px;
+}
+
+.filter-pill,
+.promo-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  text-align: center;
+  white-space: nowrap;
+  min-height: 38px;
+  padding: 6px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--pastel-surface);
+  border: 1px solid var(--ruby-border);
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.filter-pill:hover,
+.promo-tab:hover {
+  background: var(--ruby-light);
+  color: var(--ruby-primary);
+}
+
+.filter-pill.active,
+.promo-tab.active {
+  background: var(--ruby-primary);
+  color: #ffffff;
+  border-color: var(--ruby-primary);
+}
+
+/* PRODUCTS GRID */
+.promo-products {
+  padding: 4px 16px 26px;
+}
+
+.count-text {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.empty-box {
+  grid-column: 1 / -1;
+  background: var(--pastel-surface);
+  border: 1px dashed var(--ruby-border);
+  padding: 24px 16px;
+  border-radius: 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13.5px;
+}
+
+.copy-btn:focus-visible,
+.filter-pill:focus-visible,
+.promo-tab:focus-visible,
+.voucher-scroll:focus-visible {
+  outline: 2px solid var(--ruby-primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .voucher-card,
+  .copy-btn,
+  .filter-pill,
+  .promo-tab {
+    transition: none;
+  }
+}

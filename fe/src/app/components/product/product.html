@@ -1,0 +1,101 @@
+<div class="breadcrumb">
+  <a routerLink="/">Trang chủ</a> &gt; <a routerLink="/products">Sản phẩm</a> &gt; <span>Chi tiết</span>
+</div>
+
+@if ((loadingDetail() && !product()) || (shop.error() && !product())) {
+  <app-data-state
+    [loading]="loadingDetail()"
+    [error]="shop.error()"
+    loadingLabel="Đang tải thông tin hoa từ MongoDB..."
+    (retry)="shop.loadCatalog()"
+  />
+} @else if (product(); as item) {
+  <article class="product-detail">
+    <div class="detail-image">
+      <img [src]="item.image" [alt]="item.name" width="600" height="600" />
+      @if (item.badge) {
+        <span class="label" [class]="item.badgeClass ?? 'label-new'">{{ item.badge }}</span>
+      }
+    </div>
+
+    <div class="detail-info">
+      <div class="detail-tags">
+        <span class="cat-tag">{{ item.category }}</span>
+        <span class="sold-tag"><app-icon name="flame" [size]="13" /><span>Đã bán {{ item.sold }}</span></span>
+      </div>
+
+      <h1 class="detail-title">{{ item.name }}</h1>
+
+      <div class="detail-price-box">
+        <span class="price">{{ item.price }}</span>
+        @if (item.oldPrice) {
+          <span class="old-price">{{ item.oldPrice }}</span>
+        }
+        @if (item.discount > 0) {
+          <span class="discount-badge">-{{ item.discount }}%</span>
+        }
+      </div>
+
+      <p class="detail-desc">{{ item.description }}</p>
+
+      <div class="meaning-box">
+        <strong><app-icon name="flower-2" [size]="15" /><span>Thông điệp loài hoa:</span></strong>
+        <span>{{ item.meaning }}</span>
+      </div>
+
+      <div class="detail-features">
+        <div class="item"><app-icon name="flower-2" [size]="15" /><span>Hoa tươi Đà Lạt chọn lọc 100% trong ngày</span></div>
+        <div class="item"><app-icon name="mail" [size]="15" /><span>Tặng kèm thiệp viết tay &amp; giấy lụa FLEURÉ</span></div>
+        <div class="item"><app-icon name="truck" [size]="15" /><span>Giao nhanh trong 60 phút nội thành</span></div>
+      </div>
+
+      <div class="qty-row">
+        <span>Số lượng</span>
+        <div class="qty-controls">
+          <button
+            type="button"
+            [disabled]="quantity() <= 1"
+            (click)="changeQty(-1)"
+            aria-label="Giảm số lượng"
+          >
+            −
+          </button>
+          <span aria-live="polite">{{ quantity() }}</span>
+          <button type="button" (click)="changeQty(1)" aria-label="Tăng số lượng">+</button>
+        </div>
+      </div>
+
+      <div class="detail-actions">
+        <button type="button" class="btn-cart" (click)="addToCart()"><app-icon name="shopping-bag" [size]="15" /><span>Thêm vào giỏ</span></button>
+        <button type="button" class="btn-buy-now" (click)="buyNow()">Mua ngay →</button>
+      </div>
+
+      <div class="back-link">
+        <a routerLink="/products">← Xem thêm hoa tươi khác</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- SAN PHAM GOI Y -->
+  <section class="related-section">
+    <div class="section-header">
+      <h2>Có thể bạn cũng thích</h2>
+    </div>
+    <div class="product-grid">
+      @for (rel of relatedProducts(); track rel.id) {
+        <app-product-card [product]="rel" />
+      }
+    </div>
+  </section>
+} @else {
+  <section class="not-found-wrap">
+    <div class="not-found-card">
+      <span class="not-found-icon"><app-icon name="flower-2" [size]="26" /></span>
+      <h1>Không tìm thấy mẫu hoa này</h1>
+      <p>
+        Mã sản phẩm bạn đang tìm không tồn tại hoặc mẫu hoa này đã tạm ngừng kinh doanh tại FLEURÉ.
+      </p>
+      <a routerLink="/products" class="btn-back-catalog">Xem bộ sưu tập hoa</a>
+    </div>
+  </section>
+}

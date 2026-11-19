@@ -1,0 +1,123 @@
+<div class="breadcrumb">
+  <a routerLink="/">Trang chủ</a> &gt; <span>Bài viết</span>
+</div>
+
+<section class="page-head">
+  <span class="page-pill">FLEURÉ Journal</span>
+  <h1>Tạp Chí Chăm Hoa &amp; Nghệ Thuật Tặng Quà</h1>
+  <p>Tổng hợp {{ sortedPosts().length }} câu chuyện về ngôn ngữ loài hoa, cách gói chuẩn Pháp và mẹo giữ hoa tươi lâu.</p>
+</section>
+
+<!-- DOC BAI VIET CHI TIET -->
+@if (activePost(); as post) {
+  <article id="post-reader" #readerCard tabindex="-1" class="reader-card">
+    <div class="reader-top">
+      <span class="post-cat">{{ post.category }}</span>
+      <button type="button" class="close-reader" (click)="closePost()">
+        <span>Đóng bài</span>
+        <app-icon name="x" [size]="14" />
+      </button>
+    </div>
+
+    <h2>{{ post.title }}</h2>
+    <div class="reader-meta">
+      <span class="meta-item"><app-icon name="user" [size]="13" /><span>{{ post.author }}</span></span>
+      <span class="meta-item"><app-icon name="calendar" [size]="13" /><span>{{ post.publishedAt }}</span></span>
+      <span class="meta-item"><app-icon name="clock" [size]="13" /><span>{{ post.readTimeMinutes }} phút đọc</span></span>
+    </div>
+
+    <div class="reader-cover">
+      <img [src]="post.image" [alt]="post.title" />
+    </div>
+
+    <div class="reader-body">
+      @for (paragraph of post.content; track $index) {
+        <p>{{ paragraph }}</p>
+      }
+    </div>
+
+    <div class="tip-box">
+      <strong><app-icon name="lightbulb" [size]="15" /><span>Mẹo từ Florist FLEURÉ:</span></strong>
+      <p>{{ post.careTip }}</p>
+    </div>
+
+    @if (relatedProduct(); as item) {
+      <div class="related-flower">
+        <img [src]="item.image" [alt]="item.name" />
+        <div class="related-info">
+          <small>Gợi ý hoa trong bài</small>
+          <strong>{{ item.name }}</strong>
+          <span>{{ item.price }}</span>
+        </div>
+        <a [routerLink]="['/product', item.slug || item.id]" class="btn-mini">Xem mẫu →</a>
+      </div>
+    }
+  </article>
+}
+
+<!-- LOC CHU DE -->
+<section class="cat-bar">
+  @for (cat of categories; track cat) {
+    <button
+      type="button"
+      class="cat-chip"
+      [class.active]="selectedCategory() === cat"
+      [attr.aria-pressed]="selectedCategory() === cat"
+      (click)="selectCategory(cat)"
+    >
+      {{ cat }}
+    </button>
+  }
+</section>
+
+<!-- DANH SACH BAI VIET -->
+@if (shop.loading() || shop.error()) {
+  <app-data-state
+    [loading]="shop.loading()"
+    [error]="shop.error()"
+    loadingLabel="Đang tải bài viết từ MongoDB..."
+    (retry)="shop.loadCatalog()"
+  />
+} @else {
+<section class="posts-wrap">
+  <div class="section-header">
+    <h2>Tất cả bài viết</h2>
+    <span class="count-text">{{ filteredPosts().length }} bài</span>
+  </div>
+
+  <div class="posts-list">
+    @for (post of filteredPosts(); track post.id) {
+      <article class="article-card" [class.reading]="selectedPostId() === post.id">
+        <div class="article-img">
+          <img [src]="post.image" [alt]="post.title" />
+          <span class="img-tag">{{ post.category }}</span>
+        </div>
+        <div class="article-content">
+          <div class="article-meta">
+            <span>{{ post.publishedAt }}</span>
+            <span>&bull; {{ post.readTimeMinutes }} phút đọc</span>
+          </div>
+          <h3>{{ post.title }}</h3>
+          <p>{{ post.excerpt }}</p>
+          <button
+            type="button"
+            class="read-btn card-stretched-btn"
+            [attr.aria-pressed]="selectedPostId() === post.id"
+            [attr.aria-label]="'Đọc bài viết: ' + post.title"
+            (click)="openPost(post.id)"
+          >
+            @if (selectedPostId() === post.id) {
+              <span>Đang mở đọc</span>
+              <app-icon name="check" [size]="14" />
+            } @else {
+              <span>Đọc chi tiết →</span>
+            }
+          </button>
+        </div>
+      </article>
+    } @empty {
+      <div class="empty-box">Chưa có bài viết trong chuyên mục này.</div>
+    }
+  </div>
+</section>
+}

@@ -1,0 +1,540 @@
+.cart-container {
+  padding: 6px 16px 28px;
+}
+
+.cart-container h1 {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  margin: 0 0 14px;
+  color: var(--text-title);
+}
+
+.cart-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}
+
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.cart-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.cart-item {
+  display: flex;
+  gap: 12px;
+  background: var(--pastel-surface);
+  border: 1px solid var(--ruby-border);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: var(--shadow-card);
+}
+
+.item-thumb {
+  width: 84px;
+  height: 84px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--ruby-light);
+}
+
+.item-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.item-name,
+.item-head h3 {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0 0 4px;
+  color: var(--text-title);
+  overflow-wrap: break-word;
+}
+
+.item-title-link {
+  display: inline;
+  color: inherit;
+}
+
+.item-title-link:hover {
+  color: var(--ruby-primary);
+}
+
+.remove-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 50%;
+  background: #fff0f4;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.remove-btn:hover {
+  background: #ffdde5;
+  color: var(--danger);
+}
+
+.item-price {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--ruby-primary);
+  margin-bottom: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.qty-bar {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  border: 1px solid var(--ruby-border);
+  border-radius: var(--radius-pill);
+  padding: 2px 3px;
+  background: var(--pastel-bg);
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.qty-bar span {
+  min-width: 22px;
+  text-align: center;
+  color: var(--text-title);
+  font-variant-numeric: tabular-nums;
+}
+
+.qty-bar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 50%;
+  background: var(--pastel-surface);
+  color: var(--ruby-primary);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.qty-bar button:hover {
+  background: var(--ruby-soft);
+  color: var(--ruby-hover);
+}
+
+/* VOUCHER */
+.voucher-box {
+  background: var(--pastel-surface);
+  border: 1px solid var(--ruby-border);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+.voucher-box label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-title);
+  margin-bottom: 8px;
+}
+
+.voucher-row {
+  display: flex;
+  gap: 8px;
+}
+
+.voucher-row input {
+  flex: 1;
+  min-width: 0;
+  min-height: 42px;
+  border: 1px solid var(--ruby-border);
+  border-radius: var(--radius-pill);
+  padding: 8px 14px;
+  font-size: 16px;
+  color: var(--text-main);
+  background: var(--pastel-bg);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.voucher-row input:focus {
+  border-color: var(--ruby-primary);
+  box-shadow: 0 0 0 3px rgba(157, 37, 71, 0.14);
+}
+
+.voucher-row button {
+  flex-shrink: 0;
+  min-height: 42px;
+  background: var(--ruby-primary);
+  color: #ffffff;
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+}
+
+.voucher-row button:hover {
+  background: var(--ruby-hover);
+}
+
+.voucher-msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  padding: 8px 12px;
+  border-radius: 10px;
+  margin: 10px 0 0;
+  font-weight: 600;
+  color: var(--ruby-primary);
+  background: var(--ruby-light);
+  border: 1px solid var(--ruby-border);
+}
+
+.voucher-msg app-icon {
+  margin-top: 1px;
+}
+
+.voucher-msg.is-success {
+  color: var(--success);
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+}
+
+.voucher-msg.is-error {
+  color: var(--danger);
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+}
+
+/* SUMMARY */
+.cart-summary {
+  background: var(--pastel-surface);
+  border: 1px solid var(--ruby-border);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: var(--shadow-card);
+}
+
+.cart-summary .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.discount-row {
+  color: var(--ruby-primary) !important;
+  font-weight: 700;
+}
+
+.cart-summary .free {
+  color: var(--success);
+  font-weight: 700;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 800;
+  padding-top: 12px;
+  border-top: 1px dashed var(--ruby-border);
+  margin-top: 8px;
+  margin-bottom: 16px;
+  color: var(--text-title);
+  font-variant-numeric: tabular-nums;
+}
+
+.total-price {
+  color: var(--ruby-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.btn-checkout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 44px;
+  text-align: center;
+  background: var(--ruby-primary);
+  color: #ffffff;
+  border-radius: var(--radius-pill);
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 4px 14px rgba(157, 37, 71, 0.25);
+  transition: background-color 0.2s ease;
+}
+
+.btn-checkout:hover {
+  background: var(--ruby-hover);
+}
+
+.btn-checkout:disabled {
+  opacity: 0.72;
+  cursor: wait;
+}
+
+.checkout-error {
+  margin: 0 0 12px !important;
+}
+
+/* CUSTOMER DELIVERY BOX */
+.customer-box {
+  background: var(--pastel-surface);
+  border: 1px solid var(--ruby-border);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.box-title {
+  margin: 0 0 2px;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--text-title);
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.field-group label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-title);
+}
+
+.field-group input,
+.field-group textarea {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--ruby-border);
+  border-radius: 12px;
+  padding: 9px 12px;
+  font-size: 16px;
+  color: var(--text-main);
+  background: var(--pastel-bg);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field-group textarea {
+  min-height: 64px;
+  resize: vertical;
+}
+
+.field-group input:focus,
+.field-group textarea:focus {
+  border-color: var(--ruby-primary);
+  box-shadow: 0 0 0 3px rgba(157, 37, 71, 0.14);
+}
+
+/* SAVED MONGODB ORDER RECEIPT */
+.order-receipt {
+  text-align: left;
+  background: var(--pastel-bg);
+  border: 1px solid var(--ruby-border);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin: 10px 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.receipt-badge {
+  display: inline-block;
+  align-self: flex-start;
+  background: var(--ruby-soft);
+  color: var(--ruby-dark);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.receipt-row > span {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.receipt-row strong {
+  color: var(--text-main);
+  text-align: right;
+  word-break: break-word;
+}
+
+.receipt-row.total {
+  padding-top: 8px;
+  border-top: 1px dashed var(--ruby-border);
+  font-size: 14px;
+}
+
+.receipt-row.total strong {
+  color: var(--ruby-primary);
+  font-size: 15px;
+}
+
+.btn-continue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 38px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ruby-primary);
+  font-weight: 700;
+  margin-top: 10px;
+  transition: color 0.2s ease;
+}
+
+.btn-continue:hover {
+  color: var(--ruby-hover);
+}
+
+/* EMPTY & SUCCESS */
+.empty-cart,
+.success-card {
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--pastel-surface);
+  border: 1px solid var(--ruby-border);
+  border-radius: 20px;
+  padding: 32px 20px;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+}
+
+.empty-icon,
+.success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--ruby-light);
+  color: var(--ruby-primary);
+  margin: 0 auto 12px;
+}
+
+.success-icon {
+  color: var(--success);
+  background: var(--success-bg);
+}
+
+.empty-cart h2,
+.success-card h2 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  color: var(--text-title);
+  margin: 0 0 8px;
+}
+
+.empty-cart p,
+.success-card p {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  margin: 0 0 20px;
+  line-height: 1.55;
+}
+
+.empty-cart .btn-checkout,
+.success-card .btn-checkout {
+  width: auto;
+  padding: 12px 24px;
+}
+
+.remove-btn:focus-visible,
+.qty-bar button:focus-visible,
+.voucher-row button:focus-visible,
+.btn-checkout:focus-visible,
+.btn-continue:focus-visible,
+.item-title-link:focus-visible {
+  outline: 2px solid var(--ruby-primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .remove-btn,
+  .qty-bar button,
+  .voucher-row input,
+  .voucher-row button,
+  .field-group input,
+  .field-group textarea,
+  .btn-checkout,
+  .btn-continue {
+    transition: none;
+  }
+}
