@@ -4,6 +4,7 @@ import { connectDb, disconnectDb } from './config/db.js';
 import { ensureSeeded } from './seed.js';
 
 const PORT = Number(process.env.PORT) || 5000;
+const HOST = process.env.HOST || '0.0.0.0';
 
 async function startServer() {
   await connectDb();
@@ -16,8 +17,8 @@ async function startServer() {
   }
 
   const app = createApp();
-  const server = app.listen(PORT, '127.0.0.1', () => {
-    console.log(`FLEURE Backend API listening at http://127.0.0.1:${PORT}/api`);
+  const server = app.listen(PORT, HOST, () => {
+    console.log(`FLEURE Backend API listening at http://${HOST}:${PORT}/api`);
   });
 
   const shutdown = async () => {

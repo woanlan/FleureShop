@@ -21,6 +21,14 @@ export function createApp() {
   );
 
   app.use(express.json());
+  app.get('/', (_req, res) => {
+    res.json({
+      service: 'FLEURÉ Flower Boutique API',
+      status: 'ok',
+      health: '/api/health',
+      endpoints: ['/api/home', '/api/categories', '/api/products', '/api/posts', '/api/experiences', '/api/orders'],
+    });
+  });
   app.use('/api', shopRouter);
 
   app.use((err, _req, res, _next) => {
